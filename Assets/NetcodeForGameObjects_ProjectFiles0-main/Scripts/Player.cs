@@ -1,7 +1,8 @@
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : NetworkBehaviour
 {
     [SerializeField] float movementSpeedBase = 5;
 
@@ -10,6 +11,15 @@ public class Player : MonoBehaviour
     private float movementSpeedMultiplier;
     private Vector2 currentMoveDirection;
     public int playerScore;
+
+    public override void OnNetworkSpawn()
+    {
+        if (!IsOwner)
+        {
+            enabled = false;
+            return;
+        }
+    }
 
     void Start()
     {
