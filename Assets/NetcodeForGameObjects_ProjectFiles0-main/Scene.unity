@@ -2565,7 +2565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   autoStartServer: 0
   autoStartHost: 0
-  autoStartClient: 0
+  autoStartClient: 1
 --- !u!1 &1660268202
 GameObject:
   m_ObjectHideFlags: 0
@@ -11710,7 +11710,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ProtocolType: 0
-  m_UseWebSockets: 0
+  m_UseWebSockets: 1
   m_UseEncryption: 0
   m_MaxPacketQueueSize: 128
   m_MaxPayloadSize: 6144
@@ -11719,7 +11719,7 @@ MonoBehaviour:
   m_MaxConnectAttempts: 60
   m_DisconnectTimeoutMS: 30000
   ConnectionData:
-    Address: 127.0.0.1
+    Address: 114.35.244.219
     Port: 7777
     ServerListenAddress: 0.0.0.0
   DebugSimulator:
