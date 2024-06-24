@@ -35,7 +35,10 @@ public class Player : NetworkBehaviour
 
     private void Move()
     {
-        Vector2 movementDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Vector3 direction = Vector3.forward * Joystick.Instance.Vertical + Vector3.right * Joystick.Instance.Horizontal;
+        
+        // Vector2 movementDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        Vector2 movementDirection = new Vector2(Joystick.Instance.Horizontal, Joystick.Instance.Vertical);
 
         Vector2 moveVector = movementDirection.normalized * movementSpeedBase * movementSpeedMultiplier;
 
@@ -54,7 +57,7 @@ public class Player : NetworkBehaviour
     private bool canAttack = true;
     private void Attack()
     {
-        if (Input.GetMouseButton(0))
+        if (!Joystick.Instance.HasInput && Input.GetMouseButton(0))
         {
             movementSpeedMultiplier = 0.5f;
             animator.SetFloat("Attack", 1);
