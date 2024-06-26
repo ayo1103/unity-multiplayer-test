@@ -1,0 +1,33 @@
+version: '3.7'  # 更新版本以支持所有最新功能
+services:
+  web:
+    build:
+      context: ./Builds/WebGL
+      dockerfile: Dockerfile
+    container_name: web
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - my_network
+    environment:
+      VIRTUAL_HOST: web-multiplayer-test.duckdns.org
+
+  dedicated_server:
+    build:
+      context: ./Builds/DedicatedServer
+      dockerfile: Dockerfile
+    container_name: dedicated_server
+    ports:
+      - "443:443"  # 修改端口映射以使用 HTTPS
+    networks:
+      - my_network
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: '512M'
+
+networks:
+  my_network:
+    driver: bridge  # 明確指定使用橋接模式
