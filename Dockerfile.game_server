@@ -1,0 +1,29 @@
+# Using Ubuntu as the base image
+FROM ubuntu:20.04
+
+# Install necessary dependencies and tools
+RUN apt-get update && apt-get install -y \
+    libglib2.0-0 \
+    libsm6 \
+    libxrender1 \
+    libxext6 \
+    iproute2 \
+    net-tools \
+    curl \
+    wget \
+    telnet \
+    traceroute \
+    netcat \
+    iputils-ping
+
+# Copy the build result to the image
+COPY ./Builds/DedicatedServer/ /usr/local/server
+
+# Set the working directory
+WORKDIR /usr/local/server
+
+# Expose the required port (e.g., 7777)
+EXPOSE 7777
+
+# Start the server
+CMD ["./server.x86_64", "-batchmode", "-nographics", "-logfile", "/usr/local/server/server.log", "-port", "7777"]

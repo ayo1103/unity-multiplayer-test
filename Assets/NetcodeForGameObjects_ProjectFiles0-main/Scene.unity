@@ -2990,12 +2990,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b432f82bf378e4d9d512c933421977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _unityTransport: {fileID: 0}
   _offlineCamera: {fileID: 1468182282}
   _reconnectButton: {fileID: 877492028}
-  autoStartServer: 1
+  autoStartServer: 0
   autoStartHost: 0
-  autoStartClient: 0
+  autoStartClient: 1
 --- !u!1 &1468182279
 GameObject:
   m_ObjectHideFlags: 0
@@ -12278,7 +12277,7 @@ MonoBehaviour:
   m_MaxConnectAttempts: 60
   m_DisconnectTimeoutMS: 30000
   ConnectionData:
-    Address: 127.0.0.1
+    Address: 114.35.244.219
     Port: 443
     ServerListenAddress: 0.0.0.0
   DebugSimulator:
