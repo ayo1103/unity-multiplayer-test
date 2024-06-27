@@ -9,6 +9,11 @@ services:
       - "7777:7777"
     networks:
       - game_network
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: '512M'
 
   nginx_server:
     build:

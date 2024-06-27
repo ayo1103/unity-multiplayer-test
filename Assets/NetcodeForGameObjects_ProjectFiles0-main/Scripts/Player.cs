@@ -35,12 +35,13 @@ public class Player : NetworkBehaviour
 
     private void Move()
     {
-        Vector3 direction = Vector3.forward * Joystick.Instance.Vertical + Vector3.right * Joystick.Instance.Horizontal;
-        
-        // Vector2 movementDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        Vector2 movementDirection = new Vector2(Joystick.Instance.Horizontal, Joystick.Instance.Vertical);
+        var joystickInput = new Vector2(Joystick.Instance.Horizontal, Joystick.Instance.Vertical);
+        var keyboardHorizontal = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        var movementDirection = joystickInput == Vector2.zero 
+            ? keyboardHorizontal 
+            : joystickInput;
 
-        Vector2 moveVector = movementDirection.normalized * movementSpeedBase * movementSpeedMultiplier;
+        Vector2 moveVector = movementDirection.normalized * (movementSpeedBase * movementSpeedMultiplier);
 
         animator.SetFloat("Speed", moveVector.magnitude);
         rb.velocity = moveVector;
