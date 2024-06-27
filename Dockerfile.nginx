@@ -1,24 +1,16 @@
-# Using Nginx as the base image
 FROM nginx:latest
 
-# Prepare directories for SSL certificates
-RUN mkdir -p /etc/ssl/certs /etc/ssl/private
+# 複製 WebGL 構建文件到 Nginx 容器
+COPY ./Builds/WebGL/ /usr/share/nginx/html
 
-# Copy your WebGL game files to the default HTML directory of Nginx
-COPY ./Builds/WebGL/webgl_build/ /usr/share/nginx/html
+# 複製 Nginx 配置文件
+COPY ./nginx/nginx.conf /etc/nginx/nginx.conf
 
-# Copy the Nginx configuration file from the project
-COPY ./Builds/WebGL/nginx.conf /etc/nginx/nginx.conf
-
-# Copy SSL certificates
-COPY ./Builds/WebGL/certs/fullchain.pem /etc/ssl/certs/fullchain.pem
-COPY ./Builds/WebGL/certs/privkey.pem /etc/ssl/private/privkey.pem
-
-# Verify Nginx configuration
-RUN nginx -t
+# 複製 SSL 證書
+COPY ./nginx/certs/ /etc/nginx/certs/
 
 # Expose ports 80 and 443 for HTTP and HTTPS
 EXPOSE 80 443
 
-# Start Nginx
+# Start Nginx with configuration test at runtime
 CMD ["nginx", "-g", "daemon off;"]

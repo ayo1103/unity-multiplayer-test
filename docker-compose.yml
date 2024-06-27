@@ -1,25 +1,26 @@
-version: '3.7'
+version: '3'
 services:
-  game_server:
+  dedicated_server:
     build:
       context: .
-      dockerfile: Dockerfile.game_server
-    container_name: game_server
+      dockerfile: Dockerfile.dedicated
+    container_name: dedicated_server
     ports:
       - "7777:7777"
+    networks:
+      - game_network
 
-  nginx_proxy:
+  nginx_server:
     build:
       context: .
       dockerfile: Dockerfile.nginx
-    container_name: nginx_proxy
+    container_name: nginx_server
     ports:
       - "80:80"
       - "443:443"
-    depends_on:
-      - game_server
-    deploy:
-      resources:
-        limits:
-          cpus: '2.0'
-          memory: '512M'
+    networks:
+      - game_network
+
+networks:
+  game_network:
+    driver: bridge
