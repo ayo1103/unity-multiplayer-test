@@ -10,14 +10,14 @@ public class PlayerController : MonoBehaviour
     // Rigidbody2D 組件
     private Rigidbody2D rb;
 
+    // 移動輸入
+    private Vector2 moveInput;
+    private Vector2 moveVelocity;
+
     void Start()
     {
         // 獲取 Rigidbody2D 組件
         rb = GetComponent<Rigidbody2D>();
-        if (rb == null)
-        {
-            Debug.LogError("Rigidbody2D 組件未找到，請在角色上添加一個 Rigidbody2D 組件。");
-        }
     }
 
     void Update()
@@ -26,13 +26,14 @@ public class PlayerController : MonoBehaviour
         float moveX = Input.GetAxis("Horizontal");
         float moveY = Input.GetAxis("Vertical");
 
-        // 設定移動向量
-        Vector2 moveInput = new Vector2(moveX, moveY);
+        // 設定移動輸入和速度
+        moveInput = new Vector2(moveX, moveY);
+        moveVelocity = moveInput.normalized * moveSpeed;
+    }
 
-        // 計算移動速度向量
-        Vector2 moveVelocity = moveInput.normalized * moveSpeed;
-
+    void FixedUpdate()
+    {
         // 使用 Rigidbody2D 移動角色
-        rb.velocity = moveVelocity;
+        rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
     }
 }
