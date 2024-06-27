@@ -2990,6 +2990,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b432f82bf378e4d9d512c933421977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _networkSetupConfig: {fileID: 0}
+  _unityTransport: {fileID: 1879734919}
   _offlineCamera: {fileID: 1468182282}
   _reconnectButton: {fileID: 877492028}
   autoStartServer: 0
