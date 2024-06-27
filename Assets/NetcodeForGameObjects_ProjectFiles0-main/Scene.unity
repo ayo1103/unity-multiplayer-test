@@ -2957,7 +2957,7 @@ GameObject:
   - component: {fileID: 1350439148}
   - component: {fileID: 1350439149}
   m_Layer: 0
-  m_Name: NetworkConnectionHelper
+  m_Name: NetworkInitializer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2990,7 +2990,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36b432f82bf378e4d9d512c933421977, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _networkSetupConfig: {fileID: 0}
   _unityTransport: {fileID: 1879734919}
   _offlineCamera: {fileID: 1468182282}
   _reconnectButton: {fileID: 877492028}
@@ -12279,8 +12278,8 @@ MonoBehaviour:
   m_MaxConnectAttempts: 60
   m_DisconnectTimeoutMS: 30000
   ConnectionData:
-    Address: 114.35.244.219
-    Port: 7777
+    Address: 
+    Port: 0
     ServerListenAddress: 0.0.0.0
   DebugSimulator:
     PacketDelayMS: 0
@@ -21527,6 +21526,6 @@ SceneRoots:
   - {fileID: 1064101607}
   - {fileID: 178133868}
   - {fileID: 1957350386}
-  - {fileID: 1879734918}
   - {fileID: 1350439148}
+  - {fileID: 1879734918}
   - {fileID: 1468182283}

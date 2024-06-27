@@ -7,5 +7,6 @@ namespace WebMultiplayerTest
     {
         public string ipAddress;
         public ushort port;
+        public string listenAddress;
     }
 }
