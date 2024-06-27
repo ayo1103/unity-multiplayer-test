@@ -1,5 +1,8 @@
 FROM nginx:latest
 
+RUN apt-get update && apt-get install -y \
+    net-tools  # 安装 netstat 工具
+
 # 複製 WebGL 構建文件到 Nginx 容器
 COPY ./Builds/WebGL/ /usr/share/nginx/html
 

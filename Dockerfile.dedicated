@@ -14,10 +14,15 @@ RUN apt-get update && apt-get install -y \
     telnet \
     traceroute \
     netcat \
-    iputils-ping
+    iputils-ping \
+    net-tools  # 安装 netstat 工具
 
 # Copy the build result to the image
 COPY ./Builds/DedicatedServer/ /usr/local/server
+
+# Copy SSL certificates
+COPY ./nginx/certs/fullchain.pem /usr/local/server/Assets/Secure/fullchain.pem
+COPY ./nginx/certs/privkey.pem /usr/local/server/Assets/Secure/privkey.pem
 
 # Set the working directory
 WORKDIR /usr/local/server
