@@ -11,11 +11,13 @@ public class LevelTest_Wall : MonoBehaviour
     private float contactTime = 0f; // 累積接觸時間
     public float requiredContactTime = 0.5f; // 需要的接觸時間來銷毀方塊
 	public GameObject effectPrefab;
+    public GameObject mine;
 
     void Start()
     {
         //spriteRenderer = GetComponent<SpriteRenderer>(); // 獲取 SpriteRenderer 組件
         originalColor = spriteRenderer.color; // 設定原始顏色
+        if (Random.Range(0,15) == 1) mine.SetActive(true);
     }
 
     void Update()
