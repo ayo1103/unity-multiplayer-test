@@ -7,10 +7,13 @@ using UnityEngine.UI;
 
 namespace WebMultiplayerTest
 {
-    public class NetworkConnectionHelper : MonoBehaviour
+    public class NetworkInitializer : MonoBehaviour
     {
+        [Header("Network")]
         [SerializeField] private UnityTransport _unityTransport;
+        [SerializeField] private SecretsLoaderHelper _secretsLoaderHelper;
 
+        [Header("UI")]
         [SerializeField] private Camera _offlineCamera;
         [SerializeField] private Button _reconnectButton;
 
@@ -45,6 +48,13 @@ namespace WebMultiplayerTest
                     networkConfig.ipAddress,
                     networkConfig.port,
                     networkConfig.listenAddress);
+                
+#if UNITY_SERVER
+                NetworkManager.Singleton.StartServer();
+#elif UNITY_WEBGL
+                NetworkManager.Singleton.StartClient();
+#endif
+                
             }
             else
             {
@@ -75,7 +85,7 @@ namespace WebMultiplayerTest
         {
             if (NetworkManager.Singleton != null)
             {
-                NetworkManager.Singleton.OnConnectionEvent -= OnConnectionEvent;    
+                NetworkManager.Singleton.OnConnectionEvent -= OnConnectionEvent;
             }
         }
 

@@ -21,8 +21,8 @@ RUN apt-get update && apt-get install -y \
 COPY ./Builds/DedicatedServer/ /usr/local/server
 
 # Copy SSL certificates
-COPY ./nginx/certs/fullchain.pem /usr/local/server/Assets/Secure/fullchain.pem
-COPY ./nginx/certs/privkey.pem /usr/local/server/Assets/Secure/privkey.pem
+COPY ./nginx/certs/fullchain.pem /certs/fullchain.pem
+COPY ./nginx/certs/privkey.pem /certs/privkey.pem
 
 # Set the working directory
 WORKDIR /usr/local/server

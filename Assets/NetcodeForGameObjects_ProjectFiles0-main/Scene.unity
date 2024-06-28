@@ -2991,6 +2991,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _unityTransport: {fileID: 1879734919}
+  _secretsLoaderHelper: {fileID: 1879734921}
   _offlineCamera: {fileID: 1468182282}
   _reconnectButton: {fileID: 877492028}
   autoStartServer: 0
@@ -12338,8 +12339,8 @@ MonoBehaviour:
   m_ServerCommonName: web-multiplayer-test.duckdns.org
   m_ClientCAFilePath: 
   m_ClientCAOverride: 
-  m_ServerCertificateFilePath: Assets/Secure/fullchain.pem
-  m_ServerPrivateFilePath: Assets/Secure/privkey.pem
+  m_ServerCertificateFilePath: /certs/fullchain.pem
+  m_ServerPrivateFilePath: /certs/privkey.pem
 --- !u!1 &1957350383
 GameObject:
   m_ObjectHideFlags: 0
