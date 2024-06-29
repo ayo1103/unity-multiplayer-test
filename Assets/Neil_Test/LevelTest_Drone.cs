@@ -124,6 +124,12 @@ public class LevelTest_Drone : MonoBehaviour
 
             if (closestTarget != null)
             {
+                if (currentTarget != null)
+                {
+                    // 關閉之前目標的鎖定符號
+                    ShowLockOnSymbol(currentTarget, false);
+                }
+
                 currentTarget = closestTarget;
                 ShowLockOnSymbol(currentTarget, true);
                 ShootBullet(currentTarget);
@@ -131,8 +137,11 @@ public class LevelTest_Drone : MonoBehaviour
             }
             else
             {
-                ShowLockOnSymbol(currentTarget, false);
-                currentTarget = null;
+                if (currentTarget != null)
+                {
+                    ShowLockOnSymbol(currentTarget, false);
+                    currentTarget = null;
+                }
             }
         }
     }
@@ -148,7 +157,7 @@ public class LevelTest_Drone : MonoBehaviour
     {
         if (target != null)
         {
-            Transform lockOnSymbol = target.Find("LockOnSymbol");
+            Transform lockOnSymbol = target.Find("Target");
             if (lockOnSymbol != null)
             {
                 lockOnSymbol.gameObject.SetActive(show);

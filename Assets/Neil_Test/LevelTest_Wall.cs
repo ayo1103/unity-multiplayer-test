@@ -9,12 +9,12 @@ public class LevelTest_Wall : MonoBehaviour
     private Color targetColor = Color.red; // 目標顏色（紅色）
     private bool isTouchingPlayer = false; // 角色是否在接觸方塊
     private float contactTime = 0f; // 累積接觸時間
-    public float requiredContactTime = 0.5f; // 需要的接觸時間來銷毀方塊
+    public float requiredContactTime = 0.8f; // 需要的接觸時間來銷毀方塊
     public GameObject effectPrefab; // 銷毀時的特效
     public GameObject mine; // 隨機出現的地雷
     private float health = 5f; // 生命值初始為 5
     private float damageAmount = 2f; // 每次受到攻擊時降低的生命值
-    private float bulletDamage = 0.2f; // 子彈每次命中降低的生命值比例
+    private float bulletDamage = 2f; // 子彈每次命中降低的生命值比例
 
     void Start()
     {
