@@ -3,13 +3,10 @@ version: 2.1
 workflows:
   build-workflow:
     jobs:
-      - runner-test
-
+      - runner
 jobs:
-  runner-test:
+  runner:
     machine: true
     resource_class: ayo-game-dev-resource/docker-runner
     steps:
-      - run:
-          name: print log
-          command: echo "Hello, CircleCI!"
+      - run: echo "Hi I'm on Runners!"
