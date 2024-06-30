@@ -8,7 +8,7 @@ workflows:
 jobs:
   runner-test:
     machine: true
-    resource_class: ayo-game-dev-resource/container-runner
+    resource_class: ayo-game-dev-resource/docker-runner
     steps:
       - run:
           name: print log
