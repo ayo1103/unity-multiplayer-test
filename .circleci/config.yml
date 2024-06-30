@@ -7,6 +7,6 @@ workflows:
 jobs:
   runner:
     machine: true
-    resource_class: ayo-game-dev-resource/docker-runner
+    resource_class: ayo-game-dev-resource/old-docker-runner
     steps:
       - run: echo "Hi I'm on Runners!"
