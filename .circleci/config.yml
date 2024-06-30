@@ -1,26 +1,15 @@
-# version: 2.1
-# workflows:
-#   testing:
-#     jobs:
-#       - runner-test
-# jobs:
-#   runner-test:
-#     machine: true
-#     resource_class: ayo-game-dev-resource/container-runner
-#     steps:
-#       - run: echo "Hi I'm on Runners!"
-
 version: 2.1
-
-jobs:
-  build:
-    machine:
-      image: ubuntu-1604:202010-01
-      resource_class: ayo-game-dev-resource/container-runner
-    steps:
-      - run: echo "Hi, I'm on a machine runner!"
 
 workflows:
   build-workflow:
     jobs:
-      - build
+      - runner-test
+
+jobs:
+  runner-test:
+    machine: true
+    resource_class: ayo-game-dev-resource/container-runner
+    steps:
+      - run:
+          name: print log
+          command: echo "Hello, CircleCI!"
