@@ -124,7 +124,7 @@ public class LevelTest_Drone : MonoBehaviour
 
             if (closestTarget != null)
             {
-                if (currentTarget != null)
+                if (currentTarget != null && currentTarget != closestTarget)
                 {
                     // 關閉之前目標的鎖定符號
                     ShowLockOnSymbol(currentTarget, false);

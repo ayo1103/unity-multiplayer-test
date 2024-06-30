@@ -13,8 +13,10 @@ public class LevelTest_Wall : MonoBehaviour
     public GameObject effectPrefab; // 銷毀時的特效
     public GameObject mine; // 隨機出現的地雷
     private float health = 5f; // 生命值初始為 5
-    private float damageAmount = 2f; // 每次受到攻擊時降低的生命值
-    private float bulletDamage = 2f; // 子彈每次命中降低的生命值比例
+    private float damageAmount = 1f; // 每次受到攻擊時降低的生命值
+    private float bulletDamage = 1f; // 子彈每次命中降低的生命值比例
+    float colorProcess = 0f;
+    private bool isTakingDamage = false; // 是否正在扣血
 
     void Start()
     {
@@ -27,21 +29,37 @@ public class LevelTest_Wall : MonoBehaviour
 
     void Update()
     {
-        if (isTouchingPlayer)
+        if (isTouchingPlayer && !isTakingDamage)
         {
-            contactTime += Time.deltaTime; // 累積接觸時間
+            StartCoroutine(TakeDamageOverTime(0.1f, 1));
 
-            // 根據累積接觸時間計算顏色變化
-            float t = contactTime / requiredContactTime;
-            spriteRenderer.color = Color.Lerp(originalColor, targetColor, t);
 
-            // 如果累積接觸時間達到要求，銷毀方塊並生成特效
-            if (contactTime >= requiredContactTime)
+            if (health <= 0)
             {
                 Instantiate(effectPrefab, transform.position, Quaternion.identity); // 生成特效
-                Destroy(gameObject); // 銷毀方塊
+                Destroy(gameObject); // 生命值耗盡時銷毀方塊
             }
+
         }
+    }
+    IEnumerator TakeDamageOverTime(float interval, int damage)
+    {
+        isTakingDamage = true;
+        while (health > 0)
+        {
+            health -= damage;
+            colorProcess = 1 - (health / 5f); // 計算紅色程度
+            spriteRenderer.color = Color.Lerp(originalColor, targetColor, colorProcess);
+
+            if (health <= 0)
+            {
+                Destroy(gameObject);
+                yield break;
+            }
+
+            yield return new WaitForSeconds(interval);
+        }
+        isTakingDamage = false;
     }
 
     // 當角色開始接觸方塊時觸發
@@ -61,6 +79,7 @@ public class LevelTest_Wall : MonoBehaviour
             isTouchingPlayer = false;
             contactTime = 0f; // 重置接觸時間
             spriteRenderer.color = originalColor; // 恢復原始顏色
+            isTakingDamage = false;
         }
     }
 
@@ -68,8 +87,8 @@ public class LevelTest_Wall : MonoBehaviour
     public void TakeDamage()
     {
         health -= damageAmount;
-        float t = 1 - (health / 5f); // 計算紅色程度
-        spriteRenderer.color = Color.Lerp(originalColor, targetColor, t);
+        colorProcess = 1 - (health / 5f); // 計算紅色程度
+        spriteRenderer.color = Color.Lerp(originalColor, targetColor, colorProcess);
 
         if (health <= 0)
         {
@@ -81,9 +100,9 @@ public class LevelTest_Wall : MonoBehaviour
     // 當方塊受到子彈攻擊時調用此方法
     public void TakeBulletDamage()
     {
-        health -= bulletDamage * 5f; // 將生命值按照比例減少
-        float t = 1 - (health / 5f); // 計算紅色程度
-        spriteRenderer.color = Color.Lerp(originalColor, targetColor, t);
+        health -= bulletDamage; // 將生命值按照比例減少
+        colorProcess = 1 - (health / 5f); // 計算紅色程度
+        spriteRenderer.color = Color.Lerp(originalColor, targetColor, colorProcess);
 
         if (health <= 0)
         {

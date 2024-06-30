@@ -105,7 +105,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7874250649144686988, guid: 11f6d425439099740929a0ad194c2267,
     type: 3}
   attackRange: 5
-  attackCooldown: 1
+  attackCooldown: 0.3
   targetColor: {r: 0.1013261, g: 0.6509434, b: 0.46178943, a: 1}
 --- !u!61 &6722051063627275510
 BoxCollider2D:
