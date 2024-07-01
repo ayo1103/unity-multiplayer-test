@@ -13,7 +13,7 @@ public class LevelTest_Wall : MonoBehaviour
     public GameObject mine; // 隨機出現的地雷
     private float health = 5f; // 生命值初始為 5
     private float damageAmount = 1f; // 每次受到攻擊時降低的生命值
-    private float bulletDamage = 1f; // 子彈每次命中降低的生命值比例
+    private float bulletDamage = 1.25f; // 子彈每次命中降低的生命值比例
     float colorProcess = 0f;
     private bool isTakingDamage = false; // 是否正在扣血
 

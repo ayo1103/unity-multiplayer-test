@@ -16,7 +16,7 @@ public class LevelTest_Drone : MonoBehaviour
     public Color targetColor; // 目標顏色（綠色）
     private bool isFollowing = false; // 是否在跟隨
     private float contactTime = 0f; // 累積接觸時間
-    private float requiredContactTime = 1f; // 需要的接觸時間來開始跟隨
+    private float requiredContactTime = 0.5f; // 需要的接觸時間來開始跟隨
     private bool hasTurnedGreen = false; // 是否已經變綠
 
     private Transform currentTarget; // 當前攻擊的目標
@@ -31,9 +31,16 @@ public class LevelTest_Drone : MonoBehaviour
     {
         if (isFollowing)
         {
-            // 計算目標位置，保持與角色的距離
-            Vector3 targetPosition = player.position - (player.position - transform.position).normalized * followDistance;
-            transform.position = Vector3.MoveTowards(transform.position, targetPosition, followSpeed * Time.deltaTime);
+            // 計算無人機和玩家之間的距離
+            float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+            // 只有當無人機距離玩家大於 followDistance 時才移動
+            if (distanceToPlayer > followDistance)
+            {
+                // 計算目標位置，保持與角色的距離
+                Vector3 targetPosition = player.position - (player.position - transform.position).normalized * followDistance;
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, followSpeed * Time.deltaTime);
+            }
 
             // 避讓其他 GreenCube
             AvoidOtherDrones();
@@ -108,7 +115,7 @@ public class LevelTest_Drone : MonoBehaviour
             float minDistance = float.MaxValue;
             Transform closestTarget = null;
 
-            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(player.position, 3f);
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(player.position, attackRange);
             foreach (var hitCollider in hitColliders)
             {
                 if (hitCollider.CompareTag("BreakableWall"))
@@ -169,7 +176,7 @@ public class LevelTest_Drone : MonoBehaviour
     {
         // 畫出攻擊範圍的圓圈
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(player.position, 2f);
+        Gizmos.DrawWireSphere(player.position, attackRange);
         Gizmos.color = Color.blue;
         Gizmos.DrawWireSphere(transform.position, attackRange);
     }

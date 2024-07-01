@@ -36,4 +36,5 @@ public class PlayerController : MonoBehaviour
         // 使用 Rigidbody2D 移動角色
         rb.MovePosition(rb.position + moveVelocity * Time.fixedDeltaTime);
     }
+
 }
