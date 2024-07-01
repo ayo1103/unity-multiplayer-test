@@ -1,6 +1,4 @@
-using System.Collections;
 using System.IO;
-using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
@@ -14,33 +12,33 @@ namespace WebMultiplayerTest
         private const string DedicatedServerBuildPath = "Builds/DedicatedServer/server.x86_64";
         private const string WebGLBuildPath = "Builds/WebGL";
 
-        [MenuItem("Build/All")]
-        public static void BuildAll()
+        [MenuItem("Build/Dedicated Server")]
+        public static void BuildServer()
         {
-            EditorCoroutineUtility.StartCoroutineOwnerless(BuildAllRoutine());
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.Standalone, BuildTarget.StandaloneLinux64);
+            var playerDataBuilder = AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder;
+            AddressableAssetSettings.CleanPlayerContent(playerDataBuilder);
+            AddressableAssetSettings.BuildPlayerContent();
+
+            var buildOptions = new BuildPlayerOptions
+            {
+                scenes = GetScenes(),
+                locationPathName = DedicatedServerBuildPath,
+                target = BuildTarget.StandaloneLinux64,
+                subtarget = (int) StandaloneBuildSubtarget.Server
+            };
+
+            var report = BuildPipeline.BuildPlayer(buildOptions);
+            LogBuildResult(report, "Linux Dedicated Server");
         }
 
-        [MenuItem("Build/Linux Dedicated Server")]
-        public static void BuildLinuxDedicatedServer()
+        [MenuItem("Build/WebGL Client")]
+        public static void BuildClient()
         {
-            EditorCoroutineUtility.StartCoroutineOwnerless(BuildLinuxDedicatedServerRoutine());
-        }
-
-        [MenuItem("Build/WebGL")]
-        public static void BuildWebGL()
-        {
-            EditorCoroutineUtility.StartCoroutineOwnerless(BuildWebGLRoutine());
-        }
-
-        private static IEnumerator BuildAllRoutine()
-        {
-            yield return BuildLinuxDedicatedServerRoutine();
-            yield return BuildWebGLRoutine();
-        }
-
-        private static IEnumerator BuildWebGLRoutine()
-        {
-            yield return BuildAddressablesForTarget(BuildTarget.WebGL);
+            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildTargetGroup.WebGL, BuildTarget.WebGL);
+            var playerDataBuilder = AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder;
+            AddressableAssetSettings.CleanPlayerContent(playerDataBuilder);
+            AddressableAssetSettings.BuildPlayerContent();
 
             var buildOptions = new BuildPlayerOptions
             {
@@ -67,47 +65,6 @@ namespace WebMultiplayerTest
 
             File.WriteAllText(path, json);
             Debug.Log($"Generated version.json with version {version} at {path}");
-        }
-
-        private static IEnumerator BuildLinuxDedicatedServerRoutine()
-        {
-            Debug.Log($"BuildLinuxDedicatedServerRoutine -- Start");
-            yield return BuildAddressablesForTarget(BuildTarget.StandaloneLinux64);
-            yield return new EditorWaitForSeconds(1);
-            
-            var buildOptions = new BuildPlayerOptions
-            {
-                scenes = GetScenes(),
-                locationPathName = DedicatedServerBuildPath,
-                target = BuildTarget.StandaloneLinux64,
-                subtarget = (int) StandaloneBuildSubtarget.Server
-            };
-            
-            var report = BuildPipeline.BuildPlayer(buildOptions);
-            LogBuildResult(report, "Linux Dedicated Server");
-            Debug.Log($"BuildLinuxDedicatedServerRoutine -- End");
-        }
-
-        private static IEnumerator BuildAddressablesForTarget(BuildTarget target)
-        {
-            Debug.Log($"BuildAddressablesForTarget = {target}");
-
-            // Set the build target
-            EditorUserBuildSettings.SwitchActiveBuildTarget(BuildPipeline.GetBuildTargetGroup(target), target);
-
-            // Wait until the build target has switched
-            while (EditorUserBuildSettings.activeBuildTarget != target)
-            {
-                yield return null;
-            }
-
-            Debug.Log($"EditorUserBuildSettings.activeBuildTarget = {target}");
-
-            // Clean and build addressable assets
-            var playerDataBuilder = AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder;
-            AddressableAssetSettings.CleanPlayerContent(playerDataBuilder);
-            AddressableAssetSettings.BuildPlayerContent();
-            Debug.Log($"Addressables built for {target}");
         }
 
         private static string[] GetScenes()
