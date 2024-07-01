@@ -71,8 +71,10 @@ namespace WebMultiplayerTest
 
         private static IEnumerator BuildLinuxDedicatedServerRoutine()
         {
+            Debug.Log($"BuildLinuxDedicatedServerRoutine -- Start");
             yield return BuildAddressablesForTarget(BuildTarget.StandaloneLinux64);
-
+            yield return new EditorWaitForSeconds(1);
+            
             var buildOptions = new BuildPlayerOptions
             {
                 scenes = GetScenes(),
@@ -80,13 +82,16 @@ namespace WebMultiplayerTest
                 target = BuildTarget.StandaloneLinux64,
                 subtarget = (int) StandaloneBuildSubtarget.Server
             };
-
+            
             var report = BuildPipeline.BuildPlayer(buildOptions);
             LogBuildResult(report, "Linux Dedicated Server");
+            Debug.Log($"BuildLinuxDedicatedServerRoutine -- End");
         }
 
         private static IEnumerator BuildAddressablesForTarget(BuildTarget target)
         {
+            Debug.Log($"BuildAddressablesForTarget = {target}");
+
             // Set the build target
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildPipeline.GetBuildTargetGroup(target), target);
 
