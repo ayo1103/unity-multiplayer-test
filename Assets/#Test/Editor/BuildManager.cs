@@ -1,3 +1,6 @@
+using System.Collections;
+using System.IO;
+using Unity.EditorCoroutines.Editor;
 using UnityEditor;
 using UnityEditor.AddressableAssets;
 using UnityEditor.AddressableAssets.Settings;
@@ -14,16 +17,62 @@ namespace WebMultiplayerTest
         [MenuItem("Build/All")]
         public static void BuildAll()
         {
-            BuildAddressablesForTarget(BuildTarget.StandaloneLinux64);
-            BuildLinuxDedicatedServer();
-
-            BuildAddressablesForTarget(BuildTarget.WebGL);
-            BuildWebGL();
+            EditorCoroutineUtility.StartCoroutineOwnerless(BuildAllRoutine());
         }
 
         [MenuItem("Build/Linux Dedicated Server")]
         public static void BuildLinuxDedicatedServer()
         {
+            EditorCoroutineUtility.StartCoroutineOwnerless(BuildLinuxDedicatedServerRoutine());
+        }
+
+        [MenuItem("Build/WebGL")]
+        public static void BuildWebGL()
+        {
+            EditorCoroutineUtility.StartCoroutineOwnerless(BuildWebGLRoutine());
+        }
+
+        private static IEnumerator BuildAllRoutine()
+        {
+            yield return BuildLinuxDedicatedServerRoutine();
+            yield return BuildWebGLRoutine();
+        }
+
+        private static IEnumerator BuildWebGLRoutine()
+        {
+            yield return BuildAddressablesForTarget(BuildTarget.WebGL);
+
+            var buildOptions = new BuildPlayerOptions
+            {
+                scenes = GetScenes(),
+                locationPathName = WebGLBuildPath,
+                target = BuildTarget.WebGL
+            };
+
+            var report = BuildPipeline.BuildPlayer(buildOptions);
+            LogBuildResult(report, "WebGL");
+            GenerateVersionJsonFile(report);
+        }
+
+        private static void GenerateVersionJsonFile(BuildReport report)
+        {
+            string version = Application.version;
+            string json = $"{{ \"version\": \"{version}\" }}";
+            string path = Path.Combine(report.summary.outputPath, "Build/version.json");
+
+            if (!Directory.Exists(Path.Combine(report.summary.outputPath, "Build")))
+            {
+                Directory.CreateDirectory(Path.Combine(report.summary.outputPath, "Build"));
+            }
+
+            File.WriteAllText(path, json);
+            Debug.Log($"Generated version.json with version {version} at {path}");
+        }
+
+        private static IEnumerator BuildLinuxDedicatedServerRoutine()
+        {
+            yield return BuildAddressablesForTarget(BuildTarget.StandaloneLinux64);
+
             var buildOptions = new BuildPlayerOptions
             {
                 scenes = GetScenes(),
@@ -36,31 +85,24 @@ namespace WebMultiplayerTest
             LogBuildResult(report, "Linux Dedicated Server");
         }
 
-        private static void BuildAddressablesForTarget(BuildTarget target)
+        private static IEnumerator BuildAddressablesForTarget(BuildTarget target)
         {
             // Set the build target
             EditorUserBuildSettings.SwitchActiveBuildTarget(BuildPipeline.GetBuildTargetGroup(target), target);
+
+            // Wait until the build target has switched
+            while (EditorUserBuildSettings.activeBuildTarget != target)
+            {
+                yield return null;
+            }
+
+            Debug.Log($"EditorUserBuildSettings.activeBuildTarget = {target}");
 
             // Clean and build addressable assets
             var playerDataBuilder = AddressableAssetSettingsDefaultObject.Settings.ActivePlayerDataBuilder;
             AddressableAssetSettings.CleanPlayerContent(playerDataBuilder);
             AddressableAssetSettings.BuildPlayerContent();
-
             Debug.Log($"Addressables built for {target}");
-        }
-
-        [MenuItem("Build/WebGL")]
-        public static void BuildWebGL()
-        {
-            var buildOptions = new BuildPlayerOptions
-            {
-                scenes = GetScenes(),
-                locationPathName = WebGLBuildPath,
-                target = BuildTarget.WebGL
-            };
-
-            var report = BuildPipeline.BuildPlayer(buildOptions);
-            LogBuildResult(report, "WebGL");
         }
 
         private static string[] GetScenes()
