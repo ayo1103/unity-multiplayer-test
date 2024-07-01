@@ -8,7 +8,6 @@ public class LevelTest_Wall : MonoBehaviour
     private Color originalColor; // 原始顏色（白色）
     private Color targetColor = Color.red; // 目標顏色（紅色）
     private bool isTouchingPlayer = false; // 角色是否在接觸方塊
-    private float contactTime = 0f; // 累積接觸時間
     public float requiredContactTime = 0.8f; // 需要的接觸時間來銷毀方塊
     public GameObject effectPrefab; // 銷毀時的特效
     public GameObject mine; // 隨機出現的地雷
@@ -31,34 +30,29 @@ public class LevelTest_Wall : MonoBehaviour
     {
         if (isTouchingPlayer && !isTakingDamage)
         {
-            StartCoroutine(TakeDamageOverTime(0.1f, 1));
-
-
-            if (health <= 0)
-            {
-                Instantiate(effectPrefab, transform.position, Quaternion.identity); // 生成特效
-                Destroy(gameObject); // 生命值耗盡時銷毀方塊
-            }
-
+            StartCoroutine(TakeDamageOverTime(0.1f, 0.8f));
         }
     }
-    IEnumerator TakeDamageOverTime(float interval, int damage)
+    IEnumerator TakeDamageOverTime(float interval, float damage)
     {
         isTakingDamage = true;
-        while (health > 0)
+        if (health > 0)
         {
             health -= damage;
             colorProcess = 1 - (health / 5f); // 計算紅色程度
             spriteRenderer.color = Color.Lerp(originalColor, targetColor, colorProcess);
 
-            if (health <= 0)
-            {
-                Destroy(gameObject);
-                yield break;
-            }
+            
 
             yield return new WaitForSeconds(interval);
         }
+        if (health <= 0)
+        {
+            Instantiate(effectPrefab, transform.position, Quaternion.identity); // 生成特效
+            Destroy(gameObject);
+            yield break;
+        }
+        
         isTakingDamage = false;
     }
 
@@ -77,25 +71,12 @@ public class LevelTest_Wall : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isTouchingPlayer = false;
-            contactTime = 0f; // 重置接觸時間
-            spriteRenderer.color = originalColor; // 恢復原始顏色
-            isTakingDamage = false;
+            
+
         }
     }
 
-    // 當方塊受到攻擊時調用此方法
-    public void TakeDamage()
-    {
-        health -= damageAmount;
-        colorProcess = 1 - (health / 5f); // 計算紅色程度
-        spriteRenderer.color = Color.Lerp(originalColor, targetColor, colorProcess);
-
-        if (health <= 0)
-        {
-            Instantiate(effectPrefab, transform.position, Quaternion.identity); // 生成特效
-            Destroy(gameObject); // 生命值耗盡時銷毀方塊
-        }
-    }
+    
 
     // 當方塊受到子彈攻擊時調用此方法
     public void TakeBulletDamage()

@@ -108,7 +108,7 @@ public class LevelTest_Drone : MonoBehaviour
             float minDistance = float.MaxValue;
             Transform closestTarget = null;
 
-            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(player.position, 2f);
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(player.position, 3f);
             foreach (var hitCollider in hitColliders)
             {
                 if (hitCollider.CompareTag("BreakableWall"))
