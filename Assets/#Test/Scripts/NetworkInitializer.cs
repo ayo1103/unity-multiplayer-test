@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+using JetBrains.Annotations;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
 using UnityEngine;
@@ -29,6 +31,31 @@ namespace WebMultiplayerTest
 
         private async void Start()
         {
+#if UNITY_EDITOR
+            if (autoStartServer)
+            {
+                NetworkManager.Singleton.StartServer();
+            }
+
+            if (autoStartHost)
+            {
+                NetworkManager.Singleton.StartHost();
+            }
+
+            if (autoStartClient)
+            {
+                NetworkManager.Singleton.StartClient();
+            }
+#else
+            await InitNetworkConnection();
+#endif
+
+            NetworkManager.Singleton.OnConnectionEvent += OnConnectionEvent;
+        }
+
+        [UsedImplicitly]
+        private async Task InitNetworkConnection()
+        {
 #if UNITY_SERVER
             string addressableName = AddressableNames.ServerNetworkConfig;
 
@@ -48,37 +75,17 @@ namespace WebMultiplayerTest
                     networkConfig.ipAddress,
                     networkConfig.port,
                     networkConfig.listenAddress);
-                
+
 #if UNITY_SERVER
                 NetworkManager.Singleton.StartServer();
 #elif UNITY_WEBGL
                 NetworkManager.Singleton.StartClient();
 #endif
-                
             }
             else
             {
                 Debug.LogError($"load asset : {addressableName} -- Failed");
             }
-
-#if UNITY_EDITOR
-            if (autoStartServer)
-            {
-                NetworkManager.Singleton.StartServer();
-            }
-
-            if (autoStartHost)
-            {
-                NetworkManager.Singleton.StartHost();
-            }
-
-            if (autoStartClient)
-            {
-                NetworkManager.Singleton.StartClient();
-            }
-#endif
-
-            NetworkManager.Singleton.OnConnectionEvent += OnConnectionEvent;
         }
 
         private void OnDestroy()

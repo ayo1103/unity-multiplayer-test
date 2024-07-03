@@ -198,7 +198,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 3592679201
+  GlobalObjectIdHash: 2730558880
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -235,6 +235,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   maxHealth: 100
+  _spriteRenderer: {fileID: 8305814175175674638}
+  _damageColor: {r: 1, g: 1, b: 1, a: 1}
+  _damageDuration: 0.2
 --- !u!114 &7811166334923831020
 MonoBehaviour:
   m_ObjectHideFlags: 0

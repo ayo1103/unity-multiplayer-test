@@ -10,7 +10,9 @@ public class Player : NetworkBehaviour
     private Rigidbody2D rb;
     private float movementSpeedMultiplier;
     private Vector2 currentMoveDirection;
-    public int playerScore;
+    
+    // public int playerScore;
+    public NetworkVariable<int> playerScore = new();
 
     public override void OnNetworkSpawn()
     {
@@ -19,15 +21,17 @@ public class Player : NetworkBehaviour
             enabled = false;
             return;
         }
+
+        playerScore.OnValueChanged += FindObjectOfType<PlayerUI>().UpdateScoreUI;
     }
 
-    void Start()
+    private void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
         Move();
         Attack();
@@ -37,8 +41,8 @@ public class Player : NetworkBehaviour
     {
         var joystickInput = new Vector2(Joystick.Instance.Horizontal, Joystick.Instance.Vertical);
         var keyboardHorizontal = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        var movementDirection = joystickInput == Vector2.zero 
-            ? keyboardHorizontal 
+        var movementDirection = joystickInput == Vector2.zero
+            ? keyboardHorizontal
             : joystickInput;
 
         Vector2 moveVector = movementDirection.normalized * (movementSpeedBase * movementSpeedMultiplier);
@@ -54,8 +58,8 @@ public class Player : NetworkBehaviour
         }
     }
 
+    private bool _canAttack = true;
 
-    private bool canAttack = true;
     private void Attack()
     {
         if (!Joystick.Instance.HasInput && Input.GetMouseButton(0))
@@ -63,19 +67,9 @@ public class Player : NetworkBehaviour
             movementSpeedMultiplier = 0.5f;
             animator.SetFloat("Attack", 1);
 
-            if (canAttack)
+            if (_canAttack)
             {
-                RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 1f, currentMoveDirection, 0, 1 << 6);
-
-                if (hits.Length > 0)
-                {
-                    hits[0].transform.GetComponent<HealthSystem>().OnDamageDealt(50);
-                    if (hits[0].transform.GetComponent<HealthSystem>().health < 0)
-                    {
-                        playerScore++;
-                    }
-                }
-
+                AttackServerRPC(currentMoveDirection);
                 StartCoroutine(AttackCooldown());
             }
         }
@@ -88,8 +82,23 @@ public class Player : NetworkBehaviour
 
     private IEnumerator AttackCooldown()
     {
-        canAttack = false;
-        yield return new WaitForSeconds(1);
-        canAttack = true;
+        _canAttack = false;
+        yield return new WaitForSeconds(0.15f);
+        _canAttack = true;
+    }
+
+    [ServerRpc]
+    private void AttackServerRPC(Vector2 direction)
+    {
+        RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, 1f, direction, 0, 1 << 6);
+
+        if (hits.Length > 0)
+        {
+            hits[0].transform.GetComponent<HealthSystem>().OnDamageDealt(50);
+            if (hits[0].transform.GetComponent<HealthSystem>().health < 0)
+            {
+                playerScore.Value++;
+            }
+        }
     }
 }

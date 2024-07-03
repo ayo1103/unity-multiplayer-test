@@ -1,23 +1,51 @@
 using System.Collections;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(HealthSystem))]
-public class Enemy : MonoBehaviour
+public class Enemy : NetworkBehaviour
 {
     [SerializeField] float attackRange = 2;
     [SerializeField] int damage = 3;
 
     public EnemySpawner enemySpawner;
     private NavMeshAgent agent;
-    private Transform player = null;
+    private Transform _player = null;
 
-    void Start()
+    public override void OnNetworkSpawn()
     {
+        if (!IsServer)
+        {
+            enabled = false;
+            GetComponent<NavMeshAgent>().enabled = false;
+            return;
+        }
+
+        NetworkManager.Singleton.OnClientDisconnectCallback += OnClientDisconnect;
+
         agent = GetComponent<NavMeshAgent>();
         agent.updateRotation = false;
         agent.updateUpAxis = false;
-        player = FindObjectOfType<Player>()?.transform;
+    }
+
+    private void OnClientDisconnect(ulong obj)
+    {
+        _player = null;
+    }
+
+    private void Update()
+    {
+        foreach (var player in enemySpawner.players)
+        {
+            if (_player == null || Vector2.Distance(player.transform.position, transform.position) <
+                Vector2.Distance(_player.position, transform.position))
+            {
+                _player = player.transform;
+            }
+        }
+
+        Move();
     }
 
     private void OnEnable()
@@ -36,21 +64,16 @@ public class Enemy : MonoBehaviour
         Destroy(gameObject);
     }
 
-    void Update()
-    {
-        Move();
-    }
-
     private bool canAttack = true;
 
     private void Move()
     {
-        if (player == null)
+        if (_player == null)
             return;
 
-        if (Vector2.Distance(transform.position, player.transform.position) > attackRange)
+        if (Vector2.Distance(transform.position, _player.transform.position) > attackRange)
         {
-            agent.destination = player.position;
+            agent.destination = _player.position;
         }
         else if (canAttack)
         {
@@ -62,7 +85,7 @@ public class Enemy : MonoBehaviour
     {
         canAttack = false;
 
-        player.GetComponent<HealthSystem>().OnDamageDealt(damage);
+        _player.GetComponent<HealthSystem>().OnDamageDealt(damage);
 
         yield return new WaitForSeconds(2);
         canAttack = true;

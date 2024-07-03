@@ -3121,7 +3121,7 @@ MonoBehaviour:
   _reconnectButton: {fileID: 877492028}
   autoStartServer: 0
   autoStartHost: 0
-  autoStartClient: 1
+  autoStartClient: 0
 --- !u!1 &1468182279
 GameObject:
   m_ObjectHideFlags: 0
@@ -21610,6 +21610,7 @@ MonoBehaviour:
   minSpawnPos: {x: -15, y: -8}
   maxSpawnPos: {x: 10, y: 5}
   enemies: []
+  players: []
 --- !u!4 &6837482240643445972
 Transform:
   m_ObjectHideFlags: 0
@@ -21634,6 +21635,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6837482240643445972}
+  - component: {fileID: 7705004210420294557}
   - component: {fileID: 6630550356416749948}
   m_Layer: 0
   m_Name: EnemySpawner
@@ -21641,7 +21643,28 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
+--- !u!114 &7705004210420294557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7705004210420294556}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 2657470098
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

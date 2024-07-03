@@ -12,8 +12,10 @@ GameObject:
   - component: {fileID: 6176513599374843337}
   - component: {fileID: 6176513599374843338}
   - component: {fileID: 6176513599374843341}
+  - component: {fileID: 2476427626858380012}
   - component: {fileID: 3002190765164028759}
   - component: {fileID: 5602877937743602462}
+  - component: {fileID: 4186429875396390926}
   m_Layer: 6
   m_Name: Enemy
   m_TagString: Untagged
@@ -155,6 +157,27 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.3885298, y: 1.5230527}
   m_EdgeRadius: 0
+--- !u!114 &2476427626858380012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6176513599374843342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  GlobalObjectIdHash: 3543002787
+  InScenePlacedSourceGlobalObjectIdHash: 0
+  AlwaysReplicateAsRoot: 0
+  SynchronizeTransform: 1
+  ActiveSceneSynchronization: 0
+  SceneMigrationSynchronization: 1
+  SpawnWithObservers: 1
+  DontDestroyWithOwner: 0
+  AutoObjectParentSync: 1
 --- !u!114 &3002190765164028759
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,6 +192,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   maxHealth: 100
+  _spriteRenderer: {fileID: 6176513599374843337}
+  _damageColor: {r: 1, g: 0, b: 0, a: 1}
+  _damageDuration: 0.1
 --- !u!114 &5602877937743602462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -184,3 +210,34 @@ MonoBehaviour:
   attackRange: 2
   damage: 3
   enemySpawner: {fileID: 0}
+--- !u!114 &4186429875396390926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6176513599374843342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 0
+  SyncRotAngleX: 0
+  SyncRotAngleY: 0
+  SyncRotAngleZ: 0
+  SyncScaleX: 0
+  SyncScaleY: 0
+  SyncScaleZ: 0
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  Interpolate: 1
+  SlerpPosition: 0
