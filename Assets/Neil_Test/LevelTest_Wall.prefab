@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5266016331364672714}
   - component: {fileID: 884874250739973415}
   - component: {fileID: 2187707859825832298}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: LevelTest_Wall
   m_TagString: BreakableWall
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1676089647620489209}
   - component: {fileID: 1215566766308467897}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Target
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -238,7 +238,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1992970020118191930}
   - component: {fileID: 3005133657495981576}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Mine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,7 +322,7 @@ GameObject:
   m_Component:
   - component: {fileID: 118233737701272575}
   - component: {fileID: 808574885323522895}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}

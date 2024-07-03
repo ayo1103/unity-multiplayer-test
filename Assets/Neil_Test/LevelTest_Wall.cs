@@ -17,6 +17,8 @@ public class LevelTest_Wall : MonoBehaviour
     float colorProcess = 0f;
     private bool isTakingDamage = false; // 是否正在扣血
 
+    public static bool isTouchingWall = false; // 靜態變量，記錄角色是否在接觸牆
+
     void Start()
     {
         originalColor = spriteRenderer.color; // 設定原始顏色
@@ -33,6 +35,7 @@ public class LevelTest_Wall : MonoBehaviour
             StartCoroutine(TakeDamageOverTime(0.1f, 0.8f));
         }
     }
+
     IEnumerator TakeDamageOverTime(float interval, float damage)
     {
         isTakingDamage = true;
@@ -41,8 +44,6 @@ public class LevelTest_Wall : MonoBehaviour
             health -= damage;
             colorProcess = 1 - (health / 5f); // 計算紅色程度
             spriteRenderer.color = Color.Lerp(originalColor, targetColor, colorProcess);
-
-            
 
             yield return new WaitForSeconds(interval);
         }
@@ -62,6 +63,7 @@ public class LevelTest_Wall : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isTouchingPlayer = true;
+            isTouchingWall = true; // 設置靜態變量
         }
     }
 
@@ -71,12 +73,9 @@ public class LevelTest_Wall : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             isTouchingPlayer = false;
-            
-
+            isTouchingWall = false; // 重置靜態變量
         }
     }
-
-    
 
     // 當方塊受到子彈攻擊時調用此方法
     public void TakeBulletDamage()

@@ -166,6 +166,7 @@ GameObject:
   - component: {fileID: 6971304375732388113}
   - component: {fileID: 6379575133711664428}
   - component: {fileID: 96043811225986319}
+  - component: {fileID: 984675986445314810}
   m_Layer: 0
   m_Name: LevelTest_Player
   m_TagString: Player
@@ -368,7 +369,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeedBase: 5
-  playerScore: 0
+  playerScore:
+    m_InternalValue: 0
 --- !u!114 &96043811225986319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,6 +386,20 @@ MonoBehaviour:
   bulletPrefab: {fileID: 5603210280754636192, guid: 73ca1b35f8877421587e215d50e59192,
     type: 3}
   firePoint: {fileID: 7649428436621937727}
-  attackCooldown: 0.2
+  attackCooldown: 0.6
   attackRange: 5
   bulletDamage: 2
+--- !u!114 &984675986445314810
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5466561158097855234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99e9652f1ec4b4694a475b981738f483, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 100

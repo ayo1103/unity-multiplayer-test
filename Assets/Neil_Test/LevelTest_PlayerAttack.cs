@@ -11,9 +11,31 @@ public class LevelTest_PlayerAttack : MonoBehaviour
     public int bulletDamage = 10; // 子弹伤害
 
     private float attackTimer = 0f; // 攻击计时器
+    private bool isWallTouching = false; // 用于跟踪墙触碰状态
+    private float wallTouchCooldownTimer = 0f; // 墙触碰后的冷却计时器
+    public float wallTouchCooldown = 0.5f; // 墙触碰冷却时间
 
     void Update()
     {
+        if (LevelTest_Wall.isTouchingWall)
+        {
+            isWallTouching = true;
+            wallTouchCooldownTimer = wallTouchCooldown;
+            return; // 如果角色正在接触墙，则不进行攻击
+        }
+        else if (isWallTouching)
+        {
+            if (wallTouchCooldownTimer > 0)
+            {
+                wallTouchCooldownTimer -= Time.deltaTime;
+                return; // 冷却计时未结束，不进行攻击
+            }
+            else
+            {
+                isWallTouching = false; // 冷却计时结束，恢复攻击
+            }
+        }
+
         attackTimer += Time.deltaTime;
 
         // 检测敌人在攻击范围内

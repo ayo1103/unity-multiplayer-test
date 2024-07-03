@@ -39,7 +39,7 @@ public class LevelTest_Enemy : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, sightRange);
         foreach (Collider2D hit in hits)
         {
-            if (hit.CompareTag("Player") || hit.CompareTag("Drone"))
+            if (hit.CompareTag("Player"))
             {
                 if (!Physics2D.Linecast(transform.position, hit.transform.position, obstacleLayer))
                 {

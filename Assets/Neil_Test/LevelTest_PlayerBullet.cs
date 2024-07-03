@@ -33,7 +33,7 @@ public class LevelTest_PlayerBullet : MonoBehaviour
 
     void HitTarget()
     {
-        HealthSystem targetHealth = target.GetComponent<HealthSystem>();
+        LevelTest_HealthSystem targetHealth = target.GetComponent<LevelTest_HealthSystem>();
         if (targetHealth != null)
         {
             targetHealth.OnDamageDealt(damage);
