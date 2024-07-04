@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelTest_BulletBreakWall : LevelTest_BulletBase
 {
-    private float damageMultiplier = 1f;
+    public float damageMultiplier = 1.25f;
     private float speedMultiplier = 1f;
 
     public void Initialize(Vector3 targetPosition, float damageMultiplier, float speedMultiplier)
@@ -19,7 +19,7 @@ public class LevelTest_BulletBreakWall : LevelTest_BulletBase
     {
         if (collision.CompareTag("BreakableWall"))
         {
-            collision.GetComponent<LevelTest_Wall>().TakeBulletDamage(1.25f * damageMultiplier);
+            collision.GetComponent<LevelTest_Wall>().TakeBulletDamage(damageMultiplier);
             Destroy(gameObject);
         }
         else if (Vector3.Distance(transform.position, target) < 0.1f)

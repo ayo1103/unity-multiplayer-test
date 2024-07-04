@@ -18,7 +18,7 @@ public class LevelTest_PlayerPickFuel : MonoBehaviour
             }
         }
         // 可以在這裡更新 UI 或觸發其他事件
-        Debug.Log("Collected fuel. Current fuel: " + fuel);
+        // Debug.Log("Collected fuel. Current fuel: " + fuel);
     }
 
     public int GetFuel()

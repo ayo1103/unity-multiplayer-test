@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelTest_BulletAttackEnemy : LevelTest_BulletBase
 {
-    private float damageMultiplier = 1f;
+    public float damageMultiplier = 1f;
     private float speedMultiplier = 1f;
 
     public void Initialize(Vector3 targetPosition, float damageMultiplier, float speedMultiplier)
@@ -19,7 +19,7 @@ public class LevelTest_BulletAttackEnemy : LevelTest_BulletBase
     {
         if (collision.CompareTag("Enemy"))
         {
-            collision.GetComponent<LevelTest_HealthSystem>().OnDamageDealt((int)(10 * damageMultiplier)); // 假設每次攻擊造成 10 點傷害
+            collision.GetComponent<LevelTest_HealthSystem>().OnDamageDealt((int)(damageMultiplier)); // 假設每次攻擊造成 10 點傷害
             Destroy(gameObject);
         }
         else if (Vector3.Distance(transform.position, target) < 0.1f)
