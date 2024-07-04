@@ -54,7 +54,10 @@ MonoBehaviour:
   target: {fileID: 0}
   damage: 10
   fadeInTime: 0.7
-  deathEffectPrefab: {fileID: 0}
+  deathEffectPrefab: {fileID: 7209842386753433094, guid: 55b2f07a02fba4927b39094311b76684,
+    type: 3}
+  fuelPrefab: {fileID: 8553264391617227839, guid: f382a150abb10472d8793a2c160208fa,
+    type: 3}
 --- !u!212 &3050544861038178692
 SpriteRenderer:
   m_ObjectHideFlags: 0

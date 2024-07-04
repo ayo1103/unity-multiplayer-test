@@ -8,7 +8,10 @@ public class LevelTest_DroneBreakWall : LevelTest_DroneBase
 
     protected override void PerformAction()
     {
-        DetectAndAttackBreakableWalls();
+        if (CanShoot())
+        {
+            DetectAndAttackBreakableWalls();
+        }
     }
 
     private void DetectAndAttackBreakableWalls()
@@ -61,7 +64,7 @@ public class LevelTest_DroneBreakWall : LevelTest_DroneBase
     {
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         LevelTest_BulletBreakWall bulletScript = bullet.GetComponent<LevelTest_BulletBreakWall>();
-        bulletScript.Initialize(target.position);
+        bulletScript.Initialize(target.position, GetDamageMultiplier(), GetSpeedMultiplier());
     }
 
     private void ShowLockOnSymbol(Transform target, bool show)

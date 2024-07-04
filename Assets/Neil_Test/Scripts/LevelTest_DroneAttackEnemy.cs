@@ -8,7 +8,10 @@ public class LevelTest_DroneAttackEnemy : LevelTest_DroneBase
 
     protected override void PerformAction()
     {
-        DetectAndAttackEnemies();
+        if (CanShoot())
+        {
+            DetectAndAttackEnemies();
+        }
     }
 
     private void DetectAndAttackEnemies()
@@ -61,7 +64,7 @@ public class LevelTest_DroneAttackEnemy : LevelTest_DroneBase
     {
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
         LevelTest_BulletAttackEnemy bulletScript = bullet.GetComponent<LevelTest_BulletAttackEnemy>();
-        bulletScript.Initialize(target.position);
+        bulletScript.Initialize(target.position, GetDamageMultiplier(), GetSpeedMultiplier());
     }
 
     private void ShowLockOnSymbol(Transform target, bool show)

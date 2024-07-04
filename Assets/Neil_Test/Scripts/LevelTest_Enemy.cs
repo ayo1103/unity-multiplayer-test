@@ -11,6 +11,7 @@ public class LevelTest_Enemy : MonoBehaviour
     public int damage = 10; // 伤害数值
     public float fadeInTime = 2f; // 淡入时间
     public GameObject deathEffectPrefab; // 死亡时生成的粒子特效预制件
+    public GameObject fuelPrefab; // 燃料预制件
 
     private NavMeshAgent navMeshAgent;
     private bool isChasing = false;
@@ -33,7 +34,7 @@ public class LevelTest_Enemy : MonoBehaviour
         // 初始时将敌人设置为透明
         spriteRenderer.color = new Color(originalColor.r, originalColor.g, originalColor.b, 0);
         StartCoroutine(FadeIn());
-        
+
         Vector3 position = transform.position;
         position.z = 0;
         transform.position = position;
@@ -74,7 +75,7 @@ public class LevelTest_Enemy : MonoBehaviour
     {
         if (!isFadingIn && other.CompareTag("Player"))
         {
-            HealthSystem playerHealth = other.GetComponent<HealthSystem>();
+            LevelTest_HealthSystem playerHealth = other.GetComponent<LevelTest_HealthSystem>();
             if (playerHealth != null)
             {
                 playerHealth.OnDamageDealt(damage);
@@ -100,6 +101,11 @@ public class LevelTest_Enemy : MonoBehaviour
         if (deathEffectPrefab != null)
         {
             Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
+        }
+
+        if (Random.value <= 0.4f) // 40%機率掉落燃料
+        {
+            Instantiate(fuelPrefab, transform.position, Quaternion.identity);
         }
     }
 

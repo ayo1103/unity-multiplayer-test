@@ -8,6 +8,7 @@ TagManager:
   - BreakableWall
   - Drone
   - Enemy
+  - Fuel
   layers:
   - Default
   - TransparentFX

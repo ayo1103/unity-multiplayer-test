@@ -167,6 +167,7 @@ GameObject:
   - component: {fileID: 6379575133711664428}
   - component: {fileID: 96043811225986319}
   - component: {fileID: 984675986445314810}
+  - component: {fileID: 548141885591380422}
   m_Layer: 0
   m_Name: LevelTest_Player
   m_TagString: Player
@@ -347,7 +348,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GlobalObjectIdHash: 4091917823
+  GlobalObjectIdHash: 2942708937
   InScenePlacedSourceGlobalObjectIdHash: 0
   AlwaysReplicateAsRoot: 0
   SynchronizeTransform: 1
@@ -404,3 +405,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   maxHealth: 999
+--- !u!114 &548141885591380422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5466561158097855234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef2aa9fecd3f24ee4af5ab872c17fecb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

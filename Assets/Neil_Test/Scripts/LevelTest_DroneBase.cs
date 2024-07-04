@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro; // 使用 TextMeshPro
 
 public abstract class LevelTest_DroneBase : MonoBehaviour
 {
@@ -18,11 +19,15 @@ public abstract class LevelTest_DroneBase : MonoBehaviour
     protected float contactTime = 0f;
     protected float requiredContactTime = 0.5f;
     protected bool hasTurnedGreen = false;
+    public int fuel = 50;
+    private Coroutine fuelConsumptionCoroutine;
+    public TextMeshPro fuelText; // 燃料值的 TextMeshPro 組件
 
     protected virtual void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
+        UpdateFuelText(); // 初始時更新顯示燃料值
     }
 
     protected virtual void Update()
@@ -32,6 +37,7 @@ public abstract class LevelTest_DroneBase : MonoBehaviour
             FollowPlayer();
             AvoidOtherDrones();
             PerformAction();
+            UpdateFuelText(); // 每幀更新顯示燃料值
         }
     }
 
@@ -66,6 +72,8 @@ public abstract class LevelTest_DroneBase : MonoBehaviour
         spriteRenderer.color = targetColor;
         hasTurnedGreen = true;
         isFollowing = true;
+
+        fuelConsumptionCoroutine = StartCoroutine(ConsumeFuel());
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -93,6 +101,45 @@ public abstract class LevelTest_DroneBase : MonoBehaviour
                     transform.position += avoidDirection * followSpeed * Time.deltaTime;
                 }
             }
+        }
+    }
+
+    private IEnumerator ConsumeFuel()
+    {
+        while (true)
+        {
+            yield return new WaitForSeconds(0.3f);
+            fuel = Mathf.Max(0, fuel - 1);
+            UpdateFuelText(); // 每次消耗燃料後更新顯示燃料值
+        }
+    }
+
+    public void AddFuel(int amount)
+    {
+        fuel += amount;
+        UpdateFuelText(); // 每次增加燃料後更新顯示燃料值
+    }
+
+    protected bool CanShoot()
+    {
+        return fuel > 0;
+    }
+
+    protected float GetDamageMultiplier()
+    {
+        return fuel > 100 ? 2f : 1f;
+    }
+
+    protected float GetSpeedMultiplier()
+    {
+        return fuel > 100 ? 2f : 1f;
+    }
+
+    private void UpdateFuelText()
+    {
+        if (fuelText != null)
+        {
+            fuelText.text = "Fuel: " + fuel;
         }
     }
 }
