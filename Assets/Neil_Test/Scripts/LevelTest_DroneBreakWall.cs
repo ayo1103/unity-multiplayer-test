@@ -18,7 +18,7 @@ public class LevelTest_DroneBreakWall : LevelTest_DroneBase
     {
         attackTimer += Time.deltaTime;
 
-        if (attackTimer >= attackCooldown)
+        if (attackTimer >= GetAttackCooldown())
         {
             float minDistance = float.MaxValue;
             Transform closestTarget = null;

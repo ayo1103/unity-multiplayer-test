@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro; // 使用 TextMeshPro
+using TMPro;
 
 public abstract class LevelTest_DroneBase : MonoBehaviour
 {
@@ -108,10 +108,32 @@ public abstract class LevelTest_DroneBase : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.4f);
+            yield return new WaitForSeconds(GetFuelConsumptionInterval());
             fuel = Mathf.Max(0, fuel - 1);
             UpdateFuelText(); // 每次消耗燃料後更新顯示燃料值
         }
+    }
+
+    private float GetFuelConsumptionInterval()
+    {
+        int activeDroneCount = GetActiveDroneCount();
+        float baseInterval = 0.4f;
+        float multiplier = 1f + 0.3f * (activeDroneCount - 1); // 每多一台無人機，燃料消耗速度+30%
+        return baseInterval / multiplier;
+    }
+
+    private int GetActiveDroneCount()
+    {
+        LevelTest_DroneBase[] allDrones = FindObjectsOfType<LevelTest_DroneBase>();
+        int count = 0;
+        foreach (LevelTest_DroneBase drone in allDrones)
+        {
+            if (drone.isFollowing)
+            {
+                count++;
+            }
+        }
+        return count;
     }
 
     public void AddFuel(int amount)
@@ -140,11 +162,18 @@ public abstract class LevelTest_DroneBase : MonoBehaviour
         return fuel > 100 ? 2f : 1f;
     }
 
+    protected float GetAttackCooldown()
+    {
+        return fuel > 100 ? attackCooldown * 0.5f : attackCooldown;
+    }
+
     private void UpdateFuelText()
     {
         if (fuelText != null)
         {
             fuelText.text = "Fuel: " + fuel;
+            fuelText.color = Color.white;
+            fuelText.color = fuel > 100 ? Color.red : originalColor;
         }
     }
 }

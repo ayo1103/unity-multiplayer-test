@@ -51,7 +51,7 @@ MonoBehaviour:
   sightRange: 10
   moveSpeed: 3
   target: {fileID: 0}
-  damage: 10
+  damage: 1
   fadeInTime: 0.7
   deathEffectPrefab: {fileID: 7209842386753433094, guid: 55b2f07a02fba4927b39094311b76684,
     type: 3}
