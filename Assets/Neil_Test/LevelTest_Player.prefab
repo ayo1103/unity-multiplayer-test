@@ -387,8 +387,9 @@ MonoBehaviour:
     type: 3}
   firePoint: {fileID: 7649428436621937727}
   attackCooldown: 0.6
-  attackRange: 5
+  attackRange: 6.8
   bulletDamage: 2
+  wallTouchCooldown: 0.5
 --- !u!114 &984675986445314810
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -402,4 +403,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  maxHealth: 100
+  maxHealth: 999
