@@ -108,7 +108,7 @@ public abstract class LevelTest_DroneBase : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.4f);
             fuel = Mathf.Max(0, fuel - 1);
             UpdateFuelText(); // 每次消耗燃料後更新顯示燃料值
         }
