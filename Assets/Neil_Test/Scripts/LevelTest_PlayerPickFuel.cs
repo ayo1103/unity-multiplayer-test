@@ -12,7 +12,7 @@ public class LevelTest_PlayerPickFuel : MonoBehaviour
         fuel += amount;
         foreach (var drone in drones)
         {
-            if (drone != null)
+            if (drone != null && drone.IsActivated())
             {
                 drone.AddFuel(amount);
             }

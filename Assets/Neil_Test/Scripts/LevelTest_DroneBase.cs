@@ -120,6 +120,11 @@ public abstract class LevelTest_DroneBase : MonoBehaviour
         UpdateFuelText(); // 每次增加燃料後更新顯示燃料值
     }
 
+    public bool IsActivated()
+    {
+        return isFollowing;
+    }
+
     protected bool CanShoot()
     {
         return fuel > 0;
