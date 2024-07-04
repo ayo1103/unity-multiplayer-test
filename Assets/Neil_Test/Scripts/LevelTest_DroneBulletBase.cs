@@ -25,4 +25,10 @@ public abstract class LevelTest_BulletBase : MonoBehaviour
     }
 
     protected abstract void OnTriggerEnter2D(Collider2D collision);
+
+    protected IEnumerator DestroyBulletAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(gameObject);
+    }
 }

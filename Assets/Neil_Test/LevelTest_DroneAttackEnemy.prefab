@@ -150,5 +150,5 @@ MonoBehaviour:
   bulletPrefab: {fileID: 7874250649144686988, guid: 649a3d673b61d48239a88e00ff13e71e,
     type: 3}
   attackRange: 6
-  attackCooldown: 0.5
+  attackCooldown: 0.45
   targetColor: {r: 0.6886792, g: 0.5852574, b: 0.20465466, a: 1}

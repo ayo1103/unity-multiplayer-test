@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3637357911026632293}
   - component: {fileID: 8862851339386452304}
   - component: {fileID: 7430513370100362230}
+  - component: {fileID: 3056685913347299542}
   m_Layer: 0
   m_Name: LevelTest_DroneBulletBreakWall
   m_TagString: Untagged
@@ -144,4 +145,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 475cd505d0b004a529a99700513d0211, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 15
+  damage: 1.4
+--- !u!50 &3056685913347299542
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7874250649144686988}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

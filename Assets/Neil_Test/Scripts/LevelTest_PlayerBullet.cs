@@ -40,4 +40,14 @@ public class LevelTest_PlayerBullet : MonoBehaviour
         }
         Destroy(gameObject);
     }
+
+	void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Wall") || collision.CompareTag("BreakableWall"))
+        {
+            Destroy(gameObject);
+        }
+        
+    }
+
 }
