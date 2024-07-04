@@ -117,8 +117,8 @@ public abstract class LevelTest_DroneBase : MonoBehaviour
     private float GetFuelConsumptionInterval()
     {
         int activeDroneCount = GetActiveDroneCount();
-        float baseInterval = 0.4f;
-        float multiplier = 1f + 0.3f * (activeDroneCount - 1); // 每多一台無人機，燃料消耗速度+30%
+        float baseInterval = 0.5f;
+        float multiplier = 1f + 0.30f * (activeDroneCount - 1); // 每多一台無人機，燃料消耗速度+30%
         return baseInterval / multiplier;
     }
 
