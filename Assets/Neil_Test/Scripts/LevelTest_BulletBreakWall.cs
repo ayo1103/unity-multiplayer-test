@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LevelTest_BulletBreakWall : LevelTest_BulletBase
 {
-    public float damageMultiplier = 1.25f;
+    public float damageMultiplier = 1f;
     private float speedMultiplier = 1f;
 
     public void Initialize(Vector3 targetPosition, float damageMultiplier, float speedMultiplier)

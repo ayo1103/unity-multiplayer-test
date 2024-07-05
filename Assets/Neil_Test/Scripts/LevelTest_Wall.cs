@@ -11,8 +11,10 @@ public class LevelTest_Wall : MonoBehaviour
     public float requiredContactTime = 0.8f; // 需要的接觸時間來銷毀方塊
     public GameObject effectPrefab; // 銷毀時的特效
     public GameObject mine; // 隨機出現的地雷
-    private float health = 5f; // 生命值初始為 5
-    private float damageAmount = 1f; // 每次受到攻擊時降低的生命值
+    private bool haveMine = false;
+    public GameObject healthPack; // 隨機出現的血包
+    private bool haveHealthPack = false;
+    public float health = 5f; // 生命值初始為 
     float colorProcess = 0f;
     private bool isTakingDamage = false; // 是否正在扣血
 
@@ -24,6 +26,12 @@ public class LevelTest_Wall : MonoBehaviour
         if (Random.Range(0, 15) == 1)
         {
             mine.SetActive(true);
+            haveMine = true;
+        }
+        if (!haveMine && Random.Range(0, 30) == 1)
+        {
+            healthPack.SetActive(true);
+            haveHealthPack = true;
         }
     }
 
@@ -31,7 +39,7 @@ public class LevelTest_Wall : MonoBehaviour
     {
         if (isTouchingPlayer && !isTakingDamage)
         {
-            StartCoroutine(TakeDamageOverTime(0.1f, 0.8f));
+            StartCoroutine(TakeDamageOverTime(0.1f, 0.6f));
         }
     }
 
@@ -41,7 +49,7 @@ public class LevelTest_Wall : MonoBehaviour
         if (health > 0)
         {
             health -= damage;
-            colorProcess = 1 - (health / 5f); // 計算紅色程度
+            colorProcess = 1 - (health / 3f); // 計算紅色程度
             spriteRenderer.color = Color.Lerp(originalColor, targetColor, colorProcess);
 
             yield return new WaitForSeconds(interval);
@@ -80,7 +88,7 @@ public class LevelTest_Wall : MonoBehaviour
     public void TakeBulletDamage(float bulletDamage)
     {
         health -= bulletDamage; // 將生命值按照比例減少
-        colorProcess = 1 - (health / 5f); // 計算紅色程度
+        colorProcess = 1 - (health / 3f); // 計算紅色程度
         spriteRenderer.color = Color.Lerp(originalColor, targetColor, colorProcess);
 
         if (health <= 0)
