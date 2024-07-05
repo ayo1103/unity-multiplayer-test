@@ -6,8 +6,8 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/NetcodeForGameObjects_ProjectFiles0-main/Scene.unity
-    guid: 737e76cdac8e0af4c8f0a199631d9666
+    path: Assets/Neil_Test/LevelTest_04.unity
+    guid: e819e96a27cf8c946a3d1830b76e5343
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 0138bd3b028100e47947edc8c90cc044,
       type: 2}

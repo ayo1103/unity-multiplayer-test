@@ -103,7 +103,7 @@ public class LevelTest_Enemy : MonoBehaviour
             Instantiate(deathEffectPrefab, transform.position, Quaternion.identity);
         }
 
-        if (Random.value <= 0.5f) // 50%機率掉落燃料
+        if (Random.value <= 0.6f) // 50%機率掉落燃料
         {
             Instantiate(fuelPrefab, transform.position, Quaternion.identity);
         }
